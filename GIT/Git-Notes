@@ -1,0 +1,91 @@
+==========
+Phase-1
+==========
+# What is VCS. Why we need VCS.
+	VCS features.
+
+#
+GIT Installation (Ubuntu):
+$ sudo apt-get update
+$ sudo apt-get install git
+
+Verify Installation:
+	which git
+	git --version
+
+
+GIT Uninstallation:
+$ sudo apt-get remove git
+
+
+#
+Git Architecture Diagram
+
+	------------------------------------------------------	
+	. (Souce area) | ..(Stage) | .git (Local Repository) |
+		       |           |			     |
+	------------------------------------------------------
+
+	- Centralized VCS -  Ex: CVS/SVN/Clearcase/Perforce
+	- Distributed VCS -  Ex: GIT/Bitkeeper
+
+=========
+Phase-2
+=========
+Creating remote repository in github
+===============
+1. create an account in github.com
+	URL: https://github.com
+
+2. login github.com with your credentials. 	
+     	click on "new repository" --> "create reopository" 
+
+3. copy the repo URL from Github:
+	https://github.com/swapnilmahajan-git/REPO-NAME.git
+
+4. Clone the source code from remote repository using 'git clone' command
+	$ git clone https://github.com/anuragmah-git/REPONAME.git
+
+5. 	$ cd REPONAME
+
+6. Create some sample code and submit the code to remote repo.
+ 
+	    $ vim Login.java  
+
+	    $ git status
+
+	    $ git add Login.java
+
+	    $ git config --global user.name "swapnil"
+
+	    $ git config --global user.email "abc@gmail.com"
+
+	    $ git commit Login.java -m "login module code"
+		
+	    $ git push
+
+#
+Git Commit structure
+	commit id
+	User/Email
+	Timestamp
+	Commit message
+	
+#
+SHA / Version / Revison /commit id 
+
+#
+Setting up mandatory configurations:
+=============================================
+$ git config --global user.name "swapnil"
+$ git config --global user.email "abc@gmail.com"
+
+$ git config --global credential.helper cache
+
+Check the configurations using below command
+$ git config --list
+
+Git stores all configurations in below file
+"cd /home/swapnil/.gitconfig"
+
+
