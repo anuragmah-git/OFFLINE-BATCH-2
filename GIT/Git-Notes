@@ -54,7 +54,7 @@ Creating remote repository in github
 
 	    $ git status
 
-	    $ git add Login.java
+	    $ git add Login.java / git add .
 
 	    $ git config --global user.name "swapnil"
 
@@ -87,5 +87,80 @@ $ git config --list
 
 Git stores all configurations in below file
 "cd /home/swapnil/.gitconfig"
+
+=========
+Phase-3
+=========
+# Understand Git Jargon.
+	- Remote Repository --- github server
+	- Working Directory ---- (.)
+	- Local Repository  ----- (.git)
+	- Stage/"Staging Index" ---- (..)
+
+
+#THis Command is used for check the repository URL.
+	$ git remote -v
+ 
+#If you want downlod remote repository then apply this commnad (It is first time activity).
+	$ git clone <repo-url>
+
+#If you want to download modified content from remote repo then apply this command, after git pull your modified changes comes in working area.
+	$ git pull
+
+#If you want to download modified content from remote repo then apply this command, But you dont want to merge modified content in your working area then apply this command
+	$ git fetch
+
+# Skip staging
+	git commit -am "submit all pending changes"
+
+
+# Creating up Local repository
+1. create/initialize a local repository with 'git init' command
+	$ mkdir <create-folder>
+	$ cd <folder-name>
+	$ git init
+	$ git add . or filename
+	$ git commit -m "commit msg"
+(Note - Create same folder name repositry in the github server)
+	$ git remote add <folder-name> <repo-url>
+	$ git push <folder-name> 
+	$ git push --set-upstream <folder-name> master
+
+
+
+2. Observe the local repository
+	$ ls -a 
+
+3.create some source code.. ex: vim Login.java
+
+4.Adding the file to STAGE.
+	$ git add <filename>
+
+5.Commiting the file to local repository
+	$ git commit <filename> -m "lgoin module code"
+
+6.Check the log of Login.java using log command.
+	$ git log <filename>
+
+========
+Phase-4 
+========
+# History - Deep Dive
+	$ git log <filename>
+	$ git log
+
+	Options:
+		- git log -n2
+		- git log --author="swapnil"
+		- git log --since="2016/12/13"
+		- git log --until="2016/12/13"
+		- git log --grep="DB code"		
+		- git log --oneline (if we want to see logs on high level that time we can use this command ie. only commit ids and msg)
+
+#Qn.
+Show me all logs committed by user "Ram" AND has a commit message "math function" in it.
+
+$ git log --author="Ram" --grep="commit msg" -n2
+
 
 
