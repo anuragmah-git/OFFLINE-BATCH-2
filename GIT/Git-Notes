@@ -164,3 +164,58 @@ $ git log --author="Ram" --grep="commit msg" -n2
 
 
 
+=======
+Phase-5
+=======
+# GIT Commands
+
+1.  
+	$ git status 
+
+	$ git diff <filename>
+
+	$ git diff --staged <filename> 
+
+	$ git diff  089871935..fc894a6bf6d2e (if we want to see difference between two files)(use commit ids).
+
+2. Deleting a file
+
+	A.) $ git rm <filename>
+	    $ git commit <filename> -m "comment"
+	    $ git push
+       
+4. Renaming a file/folder
+	A.) $ git mv Login.java <new-name>
+	    $ git commit -m "rename Login"
+	    $ git push
+			
+#
+Carry the history for new file from old file
+	- $ git log --follow <new-name>
+
+=======
+Phase-6
+=======
+
+# Undoing the changes:
+
+# undo/revert local changes from source area in exits files. ie. present in remote repo.
+	$ git checkout <filename>
+
+# Unstage the changes from STAGE area
+	$ git reset HEAD <filename>
+
+# Move changes from .git to source area 
+	$ git reset --mixed HEAD~1
+
+# Move changes from .git to stage area
+	$ git reset --soft HEAD~1
+
+# Remove changes from everywhere
+	$ git reset --hard HEAD~1
+
+# Show all the files with content difference that are modified as part of a commit.
+git show <SHA-VALUE>
+
+# List only files that are committed as part of a revision.
+	$ git diff-tree --no-commit-id --name-only -r <SHA-VALUE>
