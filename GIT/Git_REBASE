@@ -1,0 +1,49 @@
+# What is rebase 
+   - We have two branches master and feature
+   - First time in master branch two files m1,m2 then basis on this branch we created a feature branch now in branch same files m1,m2 and one new file f1 this file is created in feature branch, 
+   - but after creation of feature branch someone push one more file i.e m3 in master branch, but our feature branch base is m2.
+   - But, I want continue my work in feature branch so we created one more file ie. f2 in feature branch.
+   - so see following steps :
+       	$ git branch 
+           - master (m1,m2,m3)
+  	   - feature* (m1,m2, f1,f2) feature branch is created based on m2, so feature branch base is m2. so we need to change base of the feature branch, then use below command
+	$ git rebase master (apply this command in feature branch)
+            - now in feature branch has five file ie. (m1,m2,m3,f1,f2) now base of feature branch is m3. now we want feature branch data in master branch, then use below command
+        $ git checkout master 
+        $ git rebase feature (feature branch changes come into master branch)
+  - Simply says rebase command change base of the branch
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
