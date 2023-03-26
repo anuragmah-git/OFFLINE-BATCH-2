@@ -1,0 +1,284 @@
+
+1.)* What is Version Control System(V.C.S.)?
+     
+
+
+2.)* Why we need any Version Control System(v.C.S)?
+    
+
+
+3.)* What is the difference between SVN and Git?
+   
+	
+4.)* Which VCS you prefer? SVN Or Git? Why?
+  
+
+
+5.)* What are the advantages of Git over SVN?
+
+  
+6.) Why we call Git as Distributed VCS?
+   
+   	
+
+7.) Can you explain Git's End-to-End work flow?
+		    	 
+
+8.) How do you clone the code using git?
+
+  	
+
+
+9.)* What is the difference between Commit & Push?
+
+	  
+
+10.)* What is the difference bet'n Push and Pull?
+
+	          
+
+11.) Can you explain Git architecture?
+              
+         
+
+12.)* What is the diff. bet'n Centralized and Distributed VCS.
+
+
+
+
+13.) Have you ever created Remote repositories in Git? How?
+   
+	    
+14.) What happens if I delete .git folder?
+	
+										     
+
+15.) How do you configure username, email and editor first time in Git?
+	
+
+16.) Where Git stores configuration details?
+	
+17.)* What is the advantage of STAGE in Git?
+	
+
+18.) Git log options related questions
+	
+19. What is SHA-1? How Git uses this?
+	
+   
+20.)* I have a file modified in my Working directory. How do you show the content diff?
+
+     
+
+21.)* How do you show the content diff of a file which is staged?
+
+    
+
+22.) How do you delete and rename a file in Git?
+
+    
+23.)** What is your branching stratogy? OR Can you explain your release process/Stratogy?
+					--
+    	
+ 
+
+24.)** What branching model you suggest for parellel development?
+
+    	
+
+25.) Developer fixes a bug. How do you take the change to production?
+
+   	
+
+26.)** Explain defferent branching models that you have worked-on.
+    
+    	
+
+
+27.) Did you work on merging the code in Git?
+    
+   	
+
+
+28.)* How do you merge the code in Git?
+
+    
+
+29.)* What is merge? 
+
+	
+30.)*What is conflict? OR When do we get conflict?
+
+	
+
+31.)* What is fast-forward merge in Git?
+ 	
+	
+
+32.)* What is the difference between Merge and Rebase?
+	
+	
+33.)* How do you resolve the conflit in Git?
+	
+	
+
+34.)* What kind of conflicts you have seen?
+
+	
+
+35.) Who resolves the conflicts?
+	
+	
+
+
+36.)** What is the difference between branch and tag? 
+
+	 
+
+37.) When do you create a branch and tag?
+	
+	
+
+38.) How do you create a branch and switch to that using single command?
+	
+	
+
+
+39.) What is HEAD pointer in Git? Where Git store HEAD info.
+	
+	
+
+40.) Can we store binary files in Git?
+	
+	
+
+
+41.) Can skip the staging? How? 
+
+	
+
+
+42.)* How do you list files/folders modified as part of a commit?
+	
+	
+
+
+43.)What is git revert?
+
+
+44.) How do you add ignore list for all users?
+
+	
+45.)* What are the different files you ignore in your project?
+	
+	
+
+
+46.) How to remove a committed change? Or can we remove?
+		
+
+47.) How do you lock the branch?
+	
+	
+
+48.) How do you clone the particular branch?
+
+	
+
+
+49.) How do you restore a deleted file? Or previous changes of a file?
+
+	
+
+
+50.) How do you list the diff. of a file between two different branches.
+
+		
+
+51.) How do you list the changes which are going to be fetched? 
+
+	
+
+52.) What is Git Stash?
+	
+										      -------------
+
+53.) How do you add a new remote to git? Or How do you attach your local repo with remote?
+	
+	
+
+
+54.) What is git ls-tree?
+	
+	
+
+
+55.) What is git cherry-pick?
+
+	
+
+56.) What is git fork?
+
+	
+
+57.) 
+	
+	
+
+58.) What is git squash ?
+
+	
+
+59.) what is difference between git fetch, pull and clone?
+	
+	
+
+60.) What are Git Hooks?
+	
+	
+
+61.) What are Git TAGs
+	
+	
+62.) What is Git alias?
+
+	
+63.) What is Git gc?
+	
+	
+64.) What is git gc --aggressive?
+	
+65.) What inside .git folder?
+
+	
+66.) What is a bare Git repository?
+
+	
+
+67.) What is a Git Remote Repository?
+	
+	
+68.) What is the Working Tree in Git?
+	
+	
+
+69.) Roles and Responsibility in GIT
+	
+70.) Which port is used by git?
+
+	
+71.) How to check all remote branches and how to get in locally
+
+	
+72.) How to merge two repositories in one repositories using command line.
+	
+73.) what is git bi-sect
+
+74.) what is git blob
+
+75.) what is git blame
+
+76.) what git web-hooks
+
+
+
