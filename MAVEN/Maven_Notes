@@ -1,0 +1,162 @@
+============
+Phase-1
+============
+
+#1
+	Java Build and Deployment End-To-End Workflow.
+
+#2
+Basics
+	- Java program
+	- manual compilation (javac filename)
+	- manual Run (java class-name)
+
+#3
+What is Maven? Why we need a build tool?
+	
+
+#4
+Installation
+	- Download jdk and extract it to your favourite location.
+	- Download Apache Maven and extract it to your favourite location.
+	- Set-up below Environment variables for Maven and JDK in order to run Maven
+	  and JDK commands from any directory in the system.
+		1. JAVA_HOME
+		2. M2_HOME
+		3. PATH
+
+Installing JDK and Maven:
+=======================
+  A. create $USER_HOME/.bashrc
+  
+  B. create below Environment variables
+	export JAVA_HOME=/home/User/Directory/Directory/jdk1.8.0_191
+	export M2_HOME=/home/User/Directory/Directory/apache-maven-3.6.0
+	export PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH
+
+
+
+Load .bashrc using below command or open new ternimial
+	$ source .bashrc
+ 
+Verify Installation
+	$ java -version
+	$ mvn --version or mvn -v
+
+============
+Phase-2
+============
+
+#5 TEST YOUR KOWLEDGE
+	- Build and Deployment E2E work-flow and basics
+	- What is compilation & why we compile the source code
+	- Packaging sequence for Java application
+	- What is Build
+	- What is Deployment
+	- Environment
+	- Dev, QA & DevOps teams Interaction and Collaboration.
+
+#6
+Maven's standard project layout
+=================================
+Project creation:
+-----------------
+java projects which are created by maven, ideally follows below project folder structure.
+	
+		flipkart
+			|
+			src		pom.xml
+			|
+	main--------- test
+	|				|
+   java		       java
+	|				|
+  (group .Id)	  (group.Id)
+	|				|
+App.java		AppTest.java
+
+
+flipkart - is called "Project name" / "ArtifactID"
+src 	 - Source folder which contains the 
+				application source code
+main	 - Contains application's main functional code
+test	 - Contains application's unit testing code
+pom.xml  - Maven's build file using which we can
+				configure build steps such as 
+				compilation, test runs, jar/war creation,
+				deployments...etc.
+
+
+#7
+Creating a Java Project using Maven: (It is for standlone project)
+
+$ mvn archetype:generate -DgroupId=com.Flipkart -DartifactId=Flipkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false
+(Note :- For creating Maven project we need GAV parameter).
+
+
+============
+Phase-3
+============
+
+#8
+Building the maven project:
+-----------------------
+Execute "mvn install":
+
+	'mvn install' command executes below maven "build life cycle" phases automatically. 
+	- validate
+		validate project's structure
+	- initialize
+		prepares project with initial pre-
+		requisites ex: setting properties, creating 
+		necessary directory structure..etc.	 
+	- compile
+		compiles "main" java code.
+	- test-compile
+		compiles "test" java code
+	- test
+		Runs the test cases and generates test reports.
+	- package
+		creates jar/war.
+	- install
+		copy built artifacts i.e jar/war file into local repository $USER_HOME/.m2 
+               	(for ex. cd /home/swapnil/.m2/repository/com/Flipkart/Flipkart/1.1-SNAPSHOT$ my war file in this repository do ls after this path we will see the war/jar file                			(amazon-1.1-SNAPSHOT.war))
+
+ (Note :- 1). After mvn install target folder is created in project directory.
+	  2). mvn install command is used for compiles the code. )
+
+
+#9
+Verify Built artifacts:
+--------------------------
+Go to "target" folder and observe below.
+	
+			target
+			  |
+		classes     test-classes	surefire-reports	jar/war file
+
+
+	classes: directory contains compiled class files
+				of main source code
+	test-classes: directory contains compiled class
+				files of test source code
+				
+	surefire-reports: contains test reports.
+
+	flipkart-1.0-SNAPSHOT.war: war file of main code
+
+#
+Note: first time when we run 'mvn install' command, Maven downloads all missing dependencies into .m2  from maven's central repository.
+So we need to have internet when we run 'mvn install' command first time.
+
+
+#10
+Artifact path in local repository .m2
+# More about local repository
+ $USER_HOME/.m2/repository/groupId/artifactId/version/jar_war_file_name  (FOR EX. cd /home/swapnil/.m2/repository/com/flipkart/flipkart/1.1-SNAPSHOT/flipkart-1.1-SNAPSHOT.war)
+
+- Package naming convention:
+	artifactId-version.war (FOR EX. flipkart-1.1-SNAPSHOT.war)
+
+
+
