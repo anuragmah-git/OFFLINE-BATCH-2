@@ -159,4 +159,131 @@ Artifact path in local repository .m2
 	artifactId-version.war (FOR EX. flipkart-1.1-SNAPSHOT.war)
 
 
+============
+Phase-4
+============
+
+#11: Maven Automatic Dependency resolution feature
+	
+	- Direct dependency - 
+	- Transitive dependency(hamcrest is dependency of junit and becomes transitive dependency for our code)
+
+
+
+Maven way of dependency addition, detection from different repositories.
+
+#12
+Maven repositories
+	- Central
+	- Private/Remote (Nexus/atifactrory)
+	- Local (.m2)
+
+#13
+"mvn clean"  - remove old target folder from project directory.
+	
+
+
+============
+Phase-5
+============
+
+
+#14
+Build types
+	- Complete build/Clean build/Full build
+	- Incremental build
+	- Nightly build
+	- Daily build
+	- bugfix build
+	- adhoc/unplanned/emergency builds
+
+#15
+Skipping test cases:
+	$ mvn install -DskipTests (skip test executon)
+	$ mvn install -Dmaven.test.skip=true (skip test code compilation and execution)
+
+#16
+Run only unit testing i.e 'test' life cycle phase
+	$ mvn surefire:test
+
+
+#17
+Where Maven's coordinates/GAV parameters come into picture / helpful?
+	- Decide artifact storage path in local/central/remote
+		repositories
+	- Decide jar/war names.
+	- Define a particular version of the jar file to be
+		downloaded during dependency resolution.
+
+
+============
+Phase-6
+============
+
+--> web app builds
+For WebApps, to generate the war file, use: -DarchetypeArtifactId=maven-archetype-webapp, option as part of 'mvn archetype:generate' command which you have used before for stand-alone application.
+
+
+PROJECT-01 --> CREATE MAVEN web application for flipkart and perform end-to-end build and deployment.
+===========    =======================================================================================
+
+#
+create one folder where we want to store our project
+$ mkdir sourceCode
+
+#
+go to that created folder i.e. sourceCode 
+$ cd sourceCode/
+
+# 
+After Create Maven web application project in our created directory usign below command.
+$ mvn archetype:generate -DgroupId=com.flipkart -DartifactId=flipkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp
+      
+	=> archetype:generate - this is generating maven project.
+        => DgroupId - this is package name. 
+	=> DartifactId - this is project name. 
+	=> Dversion - this is version. 
+	=> DinteractiveMode - keep always interactivemode is on false.
+ (Note :- Here project name is flipkart)
+
+#
+After go to the project directory
+$ cd projectName/
+
+#
+After entering project directory Build the application using below Maven command
+$ mvn install
+
+#
+After mvn install target folder is creating in project folder in this folder Check final artifact i.e flipkart.war file in target directory 
+ (For ex. (pom.xml  src  target) like this)
+$ ls target 
+
+#
+Then Prepare tomcat for deployments / installation
+- Download tomcat tar.gz file from apache.org site THEN 
+- Extract it. THEN 
+- Make sure JAVA_HOME and M2_HOME environment variable is set in .bashrc file.
+
+#
+Then copy flipkart.war file from target folder to tomcat webapps folder means, (Deploy flipkart.war into tomcat).
+$ cp flipkart.war $TOMCAT_HOME/webapps
+
+#
+Start tomcat server
+$ $TOMCAT_HOME/bin/./startup.sh
+
+#
+Launch application with below URL.
+http://localhost or system IP:8080/flipkart
+[http://tomcat_server_name:8080/warfilename]
+
+
+#26
+- Building the War.
+- Deployment into tomcat Server.
+
+
+
+
 
