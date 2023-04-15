@@ -1,0 +1,106 @@
+﻿INTERVIEW QUESTION:
+=====================
+1.) What are the differences between ANT and Maven.
+
+	- ANT is low level build tool
+	- MAVEN is high level build tool
+	- Need more time build and deployment
+	- Very less time required
+
+2.) How do you create a jar/war file in Maven?
+	
+	
+
+3.)What is the  difference between mvn deploy and mvn install?
+	
+	
+
+4.)Can you explain Maven's lifecycle? [Give one line explanation about each phase during your interview]
+		
+5.)What is Maven? Why we use Maven?
+	
+	
+
+6.)While building the project, you get an error saying some jar file is missing. how do you add that?
+	
+	
+
+7.)What is groupId, artifactId, and Version in Maven?
+
+	
+
+8.)What are the Maven co-ordinates?
+	
+	 
+	
+9.)What are the mandatory attributes in pom.xml?
+
+	
+
+10.)What is the difference between 1.0-SNAPSHOT(SNAPSHOT) version and 1.0-RELEASE(RELEASE) version.
+
+	
+
+
+11.)What is the default naming convention of an artifacts(jar/war) in Maven?
+
+	
+
+
+12.)How do you generate a site in Maven?
+
+		
+
+13.)How do you run a clean build in Maven?
+	
+	
+
+14.)how do you add a dependency in Maven pom.xml?
+	
+	
+	
+14.)what is a plugin?
+
+	
+
+15.)What is the default path of artifacts in local repository?
+
+	
+
+16.)Where maven stores the built artifacts? 
+
+	
+	
+17.)How do you create a project in the Maven?
+	
+	
+
+18.)What are the different binary repositoris we have? Which one you are using for your project?
+
+	
+
+19.)How do you customize the name of your artifact(jar/war) in Maven?
+				OR
+    How do you change the name of built jar/war file in maven? what changes you need to do in pom.xml file?
+
+	
+
+
+20.)What do you mean by transitive dependency in Maven and can you explain how maven resolves it?
+
+	
+
+	
+21.)What is the significance/importance of scope parameter in dependency section?
+
+	
+	
+22.)What are the different scope's we have in Maven?
+	
+	
+		
+
+23.)What inside the target folder?
+	
+			
+
