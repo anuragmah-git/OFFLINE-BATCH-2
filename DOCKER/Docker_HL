@@ -1,0 +1,96 @@
+		Docker - The Container Virtualization Tool
+	==================================================
+
+Que1). Diff bet'n Physical server, Virtual server and Docker container?
+=>Physical Server :- We are creating one physical server machine with 1TB HDD, CPU and RAM, if we required another multiple server that time we need same configuration machine, 
+  		     that means we will do seprate OS, HDD, RAM, in all machine so the time and cost will be increasing and testing and deployment process will be slow.
+
+=>Virtual Machine :- If we are using virtual machine in one Computer, we are installing multiple virtual machine in computer and after install seprate OS and allocating some Storage and Ram.
+                    means we are virtualize the hardware, means we can supply the same hardware to this computer. again the all process will be going on one machine but its taking more time, means process will be slow.
+
+=>Docker Container :- If we are using DOCKER, docker also provide virtualization, means install docker in one computer there is no need to install seprate OS,HDD and RAM.
+
+==================================================================
+
+Que2). what is docker?
+=> Docker is containerization tool, Docker is an extension of Linux Containers (LXC): a unique kind of lightweight, 
+   application-centric virtualization that drastically reduces overhead and makes it easier to deploy software on servers. 
+
+==================================================================
+
+Que3). why docker? 
+=> Docker allows systems administrators and developers to build applications that can be run on any Linux distribution or hardware in a virtualized sandbox 
+   without the need to make custom builds for different environments. These features are attracting a lot of big names,
+   and have turned Docker into one of the most successful open source projects of the last year. It seems Docker is here to stay, so what does this mean for Linux?
+
+Que4). who can use it?
+=>Docker has been designed in a way that it can be incorporated into most DevOps applications, including Puppet, Chef, Vagrant, and Ansible, 
+  or it can be used on its own to manage development environments. The primary selling point is that it simplifies many of the tasks typically done by these other applications.
+
+========
+Day-1:
+========
+#
+Supported Platforms-
+	- Docker is supported on
+		- Linux platforms
+			Ubuntu, RHEL, CentOs..etc.
+		- Windows  
+		- OS X 		
+		  
+	- Cloud Platforms
+		Amazon EC2
+		Rackspace Cloud
+		Google compute Engine..etc.
+		Azure
+
+Note:
+Linux containers can be created on Windows and OS X.
+HOW?- Windows Docker installer contains a tiny Linux virtual machine. Docker creates linux container on top of this tiny Linux VM.
+
+
+Requirements:
+	- 64-bit architecture	  
+	- Linux 3.8 or later Kernel versions
+
+
+#
+Requirements Check:
+- Check Kernel version
+	$ uname -a Or -r
+
+NOTE: Kernel can also be upgraded.
+
+- Check OS name:
+	$ lsb_release -a / -cs
+	$ cat /etc/os-release	
+
+
+Installation Steps:
+===========	==========	
+# Update apt-get cache
+	$ sudo apt-get update
+
+# Install docker dependencies
+	$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+# Add GPG key to apt repository
+	$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Setup Stable repository:
+	$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+	
+# Update apt package index:
+	$ sudo apt-get update
+	
+# Install Latest version of Docker
+	$ sudo apt-get install docker-ce
+
+#
+Installation Check
+sudo docker --version
+
+#
+uninstall docker:
+$ sudo apt-get remove docker-ce
+
