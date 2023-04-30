@@ -272,4 +272,55 @@ $ service ssh start (status/stop)
 - Connect to the container using ssh
 $ ssh username@172.17.0.2
 
+=========
+DAY-3:
+=========
+	# Inspecting the container's processes from host machine
+	- docker top <container-name>
+
+
+# Stoping a container from 'host machine'
+	- docker stop <container-name>
+	- docker stop <container-id> (like that ee319cddd42e)(SIGTERM)
+	- docker kill <container-name> (SIGKILL)
+
+# Show last 4 containers (stopped/running)
+	- docker ps -n4
+
+# Pause containers
+	- $ docker pause <container-name or ids>
+
+# Un-pause containers
+	- $ docker unpause <container-name or ids>
+
+
+# Find More About The Container
+- docker inspect comamnd "interrogates" the container and returns the info like.. configuration info, names, commands, n/w configurations, stopped/running ..etc.
+	---------        -------------                                            ------------------  -----  --------  ------------------  ---------------	 
+	 Examples:
+	$ docker inspect <container-name or ids> 
+		Note :- This command shows info about container.
+
+	$ sudo docker inspect <container-name or ids> | grep IPAddress | tail -1 
+		Note :- This command shows IPAddress of the running container.(EX. "IPAddress": "172.17.0.2", If we want to remove special character then us e below command).
+
+==========================
+Run docker command without sudo.	
+------
+	1. Create the "docker" group
+		$ sudo groupadd docker
+
+	2. Add your user to this group
+		$ sudo usermod -aG docker swapnil
+
+	3. Logout and Login back so that your group membership
+	   is re-evaluated.
+
+	4. Check group existance:
+		$ sudo grep docker /etc/group
+
+	5. Delete the group
+		$ sudo groupdel docker
+		
+		
 
