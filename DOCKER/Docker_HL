@@ -323,4 +323,133 @@ Run docker command without sudo.
 		$ sudo groupdel docker
 		
 		
+# Find More About The Container
+- docker inspect comamnd "interrogates" the container and returns the info like.. configuration info, names, commands, n/w configurations, stopped/running ..etc.
+	---------        -------------                                            ------------------  -----  --------  ------------------  ---------------	 
+	 Examples:
+	$ docker inspect <container-name or ids> 
+		Note :- This command shows info about container.
+
+	$ sudo docker inspect <container-name or ids> | grep IPAddress | tail -1 
+		Note :- This command shows IPAddress of the running container.(EX. "IPAddress": "172.17.0.2", If we want to remove special character then us e below command).
+
+	$ sudo docker inspect <container-name or ids> | grep IPAddress | tail -1 | cut -d ':' -f2 | tr -d ' |,|"'
+		Note :- This command shows IPAddress of the running container using multiple command append in one command using (|) pipe symbol.
+	
+	$ sudo docker inspect <container-name or ids> -f '{{.NetworkSettings.Networks.bridge.IPAddress}}'
+		Note :- This is main command to show IPAddress of the running container.
+
+	$ sudo docker inspect --format '{{.Config.Hostname}}' <container-name>
+		Note :- If we want to see containers hostname then use above command.
+
+	$ sudo docker inspect -f '{{.NetworkSettings.Networks.bridge.IPAddress}}' `sudo docker ps -q`
+		Note :- This command shows IPAddress of all running containers.
+
+	$ sudo docker inspect -f '{{.Name}}' `sudo docker ps -a -q`
+		Note :- This command shows only name of all containers.
+
+	$ docker inspect --format='{{.Name}}' $(docker ps -aq --no-trunc) | cut -c2- 
+		Note :- 1).This command shows name of container (ex. /<container-name>). If we want to remove slash(/) from container name then use this command.
+			2). -c2- gives you container name without slash (/) (ex.<container-name>)
+			3). -c2 gives you first character of container name.(ex. c)
+   	Note: use --format (OR) -f  	
+
+
+- Remove all running containers
+		docker rm -f `docker ps -q`
+
+
+
+DAY-4:
+# Docker Images
+=================
+Agenda:
+	- Understand docker Image
+	- Create docker Image
+	- Store docker Image
+	- Share your own Image
+	- Examine repositories that hold images
+
+- Docker images are the building blocks for creating container.
+- From images, we launch containers.
+	
+# Listing docker images
+
+	$ sudo docker images
+		or
+	$ sudo docker image ls
+
+	$ sudo docker images -q 
+		Note :- It shows only ids.
+
+	$ sudo docker rmi `sudo docker images -q`
+		Note :- remove all images using this command.
+
+
+# Images are stored in First directory and Containers are stored in Second directory. 
+  ------               --------------      ----------
+1.) Images live in -  '/var/lib/docker/image/aufs/imagedb/content/sha256' --> This path is applicable on CENTOS7 OS only 
+                   -  /var/lib/docker/image/overlay2/imagedb/content/sha256 --> This path is applicable on UBUNTU OS only
+2.) Containers live in /var/lib/docker/containers
+
+
+DAY-5:
+PROJECT-1:
+============
+#
+SETTING-UP NGINX SERVER ON UBUNTU MANUALLY:
+--------------------------------------------
+ 
+ $ sudo apt-get update
+ $ sudo apt-get install -y nginx
+
+# start/stop/restart nginx server:
+  =========== 			
+ 	$ sudo service nginx start
+ 		       nginx stop 
+		       nginx restart
+		       nginx status
+
+# Deployment Path of the nginx server
+	 Web content/Deployment path: $ cd /var/www/html
+
+# Uninstall nginx:
+ 	$ sudo apt-get purge nginx nginx-common
+
+
+# Building our own Image
+	We have 2 Ways to create docker image:
+		1. docker "commit" (depricited)
+		2. docker "build" cmd & Dockerfile
+
+
+
+# 1.) First Approach 
+====================  (This approach is depricitd)
+Problem:- Creating docker image using "docker commit" command
+
+	Ship an application with ubuntu, nginx web server and code to your customer.
+
+
+	- create container
+		$ sudo docker run --name <image-container-name> -it ubuntu /bin/bash
+	
+	- Install nginx manually
+		# sudo apt-get install -y nginx
+	
+	- create a docker image from the container OR convert docker container as 	
+	  docker image
+		$ docker commit <container-name> "swapnilhub/nginx-image"
+	
+	- check if image has been created
+	  $ docker images
+
+	- push the newly created image to docker hub
+		$ docker login
+		$ docker push swapnilhub/nginx-image
+
+
+	- Customers can spin(create) millions of new containers using below command. means we can create new container with image.
+		$ docker run -it swapnilhub/nginx-img /bin/bash
+
 
