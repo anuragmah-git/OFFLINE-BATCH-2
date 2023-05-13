@@ -452,4 +452,159 @@ Problem:- Creating docker image using "docker commit" command
 	- Customers can spin(create) millions of new containers using below command. means we can create new container with image.
 		$ docker run -it swapnilhub/nginx-img /bin/bash
 
+#2.) Second Approach
+=====================
+
+PROJECT-2:
+=============
+DAY-6:
+# Problem:- Creating docker image using "docker build" command
+=================              -----------
+    
+     Step 1. Create One Project Directory within directory create one folder for create Dockerfile.
+	
+	- $ mkdir project  
+	- $ mkdir nginx 
+	- $ cd project/nginx
+	 	Note:- After creating Directory and folder create one Dockerfile using below command.
+
+	- $ touch Dockerfile
+		Note:- We can give any name to file insted of Dockerfile but Dockerfile is default name for Dockerfile. then create one sample html file for testing our build image.(i.e index.html)
+			           --------                   ----------     --------------------------
+
+	Note :-->  'nginx' directory is called "context" or "build context".
+		   It contains the war files, code, files or other data means it can be anything that you want to include in the image.
+
+	index.html:
+	=======
+	- $ vim index.html
+
+		<html>
+		   <body style="background-color:powderblue;">
+		     <h1 style="color:red;">Swapnil Mahajan Online Training Portal for Devops </h1>
+		   </body> 
+	        </html>
+
+	Now, create Dockerfile using below steps
+	
+	- $ vim Dockerfile
+
+	- Write within Dokckerfile below steps:
+
+		FROM ubuntu:16.04   	-(It is always start FROM first line of Dockerfile for creating container)
+		MAINTAINER "swapnilmahajan30@gmail.com" (we add this line for identifing who created this image)
+		RUN apt-get update  	-(we can write multiple command what we want to configure in our container server)
+		RUN apt-get install -y nginx
+		COPY index.html /var/www/html   -(copy the code or war or any file we want to deploy on nginx server)
+		ENTRYPOINT service nginx start && bash  -(This line start the services like ssh, server, or any thing)
+ 
+#Difference between RUN and ENTRYPOINT
+
+RUN :- RUN will be run during build time.
+---
+ENTRYPOINT:- ENTRYPOINT will be run after creation of the container.
+----------
+ 	
+# Building docker image:
+	$ cd nginx
+	$ docker build -t "username_of_dockerhub/image-name" . ("swapnilhub/nginx-img")
+
+		Note:- -t means tag i.e image_name,so build create docker file in current directory, so (.) means current directory. 
+		Note:- If the Dockerfile name is different then use -f myDockerfile before -t. Ex. see below command 
+
+	$ docker build -f myDockerfile -t "username_of_dockerhub/image-name" . 
+
+
+# Listing docker image
+	$ docker images
+		Note:- Verify image is create or not using the above command. 
+							      -------
+
+Note:- If you are First time user then Sign-up using below link 
+# Creating docker hub account
+- Docker Hub (https://hub.docker.com/)
+	- Each Repository can contain multiple images
+	- Images are Identified using tags.
+
+
+# Now we are Pushing custom images to docker_hub repository
+	$ docker login
+	$ docker push username_of_dockerhub/image-name (swapnilhub/nginx-img).
+
+#
+Testing Image
+-> First Delete your created image from directory and after use below command 
+
+# Deleting an Image
+	- docker rmi username_of_dockerhub/image-name (EX. swapnilhub/nginx-img)
+
+# Deleting all Images
+	- docker rmi `docker images -q`
+
+# Creating a new container from our image
+	$ docker run -it --name <give_name_to_container> username_of_dockerhub/image-name /bin/bash
+
+# Check IPaddress and everything what we are configure in Dockerfile in newly created container
+	$ hostname -i
+	$ service nginx status
+	$ service ssh status
+
+# Verify if nginx is running from the container.
+	$ http://172.17.0.2:80
+	
+
+Note:- If we want to add somthing in Dockerfile and we want to build again same Dockerfile that time we use this command, 
+       So internally skipping all already run command and running only added command using this command.
+ 
+# Build image without existing image	
+	- Use --no-cache option
+	$ docker build --no-cache -t="username_of_dockerhub/image-name" .
+
+#
+User Images Syntax:
+	swapnilhub/nginx (username_of_dockerhub/image-name)
+
+#
+Official Images Syntax:
+	ubuntu
+
+User images are controled by Docker users.
+official images are controled by Docker core team.
+
+
+# Specifying Image via tags
+	- ubuntu:14.04
+	  ubuntu- is image name
+	  14.04 - is called tag
+
+# Pulling the images
+	- docker pull <image-name>
+
+# Searching docker images in docker hub
+	- docker search <image-name> (Ex. puppet)
+	- docker search <image-name> (Ex. jenkins)
+
+
+DAY-7:
+#
+Docker Image layers
+=========================
+- Checking the history of our docker image
+	$ docker history <Image-Id>
+
+# Container creation process
+  How contaner is created:
+		
+		Writable Layer		
+		-		
+		flipkart application		
+		Apache image
+		nginx image
+		-		
+		Ubuntu Base Image(rootfs)
+		-
+		Bootfs:
+		    cgroups, namespace, divicemapper/aufs..etc.
+		Kernel
+
 
