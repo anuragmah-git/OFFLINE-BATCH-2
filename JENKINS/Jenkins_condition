@@ -1,0 +1,8 @@
+if [ $ENVIRONMENT = "QA" ];then
+        cp flipkart.war tomcat-webapp path
+elif  [ $ENVIRONMENT = "UAT" ];then
+         sshpass -p "swapnil" scp flipkart.war /home/dev/demo/apache-tomcat-8.5.35/webapps
+         cp flipkart.war tomcat-webapp path
+echo "deployment has been done!"
+fi
+
