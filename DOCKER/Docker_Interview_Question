@@ -1,0 +1,169 @@
+Q1. What is Docker?
+	- Docker is containerization tool, Docker is an extension of Linux Containers (LXC): a unique kind of lightweight, application-centric virtualization,
+	  that drastically reduces overhead and makes it easier to deploy software on servers.
+
+Q2. What are the differences between Physical Server and Docker and VM ?
+	=>Physical Server :- We are creating one physical server machine with 1TB HDD, CPU and RAM, if we required another multiple server that time we need same configuration machine, 
+  		     	     that means we will do seprate OS, HDD, RAM, in all machine so the time and cost will be increasing and testing and deployment process will be slow.
+
+
+					Virtual Machines					Docker Containers
+				      =====================				       ===================
+				Need more resources					Less resources are used
+				Process isolation is done at hardware level		Process Isolation is done at Operating System level
+				Separate Operating System for each VM			Operating System resources can be shared within Docker
+				VMs can be customized.					Custom container setup is easy
+				Takes time to create Virtual Machine			Creation of docker is very quick
+				Booting takes minutes					Booting is done within seconds
+
+Q3. What is the advantage of Docker over hypervisors?
+	-Docker is light weight and more efficient in terms of resource uses because it uses the host underlying kernel rather than creating its own hypervisor.
+
+Q4. Explain the architecture of Docker
+
+	Docker Client ------> Docker Server
+				|
+				|
+				Docker Host
+					|
+				Docker Daemon  Registry
+				    Container   images
+
+	- Docker uses a client-server architecture
+	- Docker Client is a service which runs a command. The command is translated using REST API and is sent to the Docker Daemon (server)
+	- Docker Daemon accepts the request and interacts with the operating system in order to build Docker Images and run Docker containers
+	- A Docker Image is a template of instruction which is used to create containers
+
+Q5. What is Docker container?
+	- Docker containers include the application and all of its dependencies, but share the kernel with other containers, running as isolated processes in user space on the host operating system. 		- Docker containers are not tied to any specific infrastructure: they run on any computer, on any infrastructure, and in any cloud.
+
+Q6. What is Docker Image?
+	- Docker images are the building blocks for creating container.	
+	- From images, we launch containers.
+
+Q7 What is Docker hub?
+	- Docker hub is a cloud-based registry service which allows you to store images, build your images and test them, stores manually pushed images, and links to Docker cloud so you can deploy images 		  to your hosts.
+
+Q8. What is Dockerfile used for?
+	- Dockerfile is nothing but a set of instructions that have to be passed on to Docker itself, 
+	- so that it can build images automatically reading these instructions from that specified Dockerfile. 
+	- A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image.
+
+Q9. How to create Docker container?
+	- docker run --name <container-name> -it <image-name> /bin/bash
+
+Q10. How to stop and restart the Docker container?
+	- docker stop <container-name>
+ 
+	- docker restart <container-name>
+
+Q11. What platforms does Docker run on?
+	• Ubuntu 12.04, 13.04 +
+	• Fedora 19/20+
+	• RHEL 6.5+
+	• CentOS 6+
+	• Gentoo
+	• ArchLinux
+	• openSUSE 12.3+
+	• CRUX 3.0+
+
+	Docker is currently available and also is able to run on the following Cloud environment setups given as below:
+	• Amazon EC2
+	• Google Compute Engine
+	• Microsoft Azure
+	• Rackspace
+
+	- Docker is extending its support to Windows and Mac OSX environments and support on Windows has been on the growth in a very drastic manner.
+
+Q12. Which platform docker not run?
+	- Windows and Mac
+
+Q13. Do I lose my data when the Docker container exits?
+	- There is no loss of data.
+
+Q14. What, in your opinion, is the most exciting potential use for Docker?
+
+	-The most exciting potential use of Docker that I can think of is its build pipeline. 
+	-Most of the Docker professionals are seen using hyper-scaling with containers, and indeed get a lot of containers on the host that it actually runs on. 
+	-These are also known to be blatantly fast. Most of the development – test build pipeline is completely automated using the Docker framework.
+
+Q15. Why is Docker the new craze in virtualization and cloud computing?
+
+	-Docker is the newest and the latest craze in the world of Virtualization and also Cloud computing because it is an ultra-lightweight containerization app that is brimming with potential to prove 		 its mettle.
+
+Q16. Why do my services take 10 seconds to recreate or stop?
+
+	-Docker compose stop will attempt to stop a specific Docker container by sending a SIGTERM message. 
+	-Once this message is delivered, it waits for the default timeout period of 10 seconds and once the timeout period is crossed, it then sends out a SIGKILL message to the container – in order to 		 kill it forcefully. 
+	-If you are actually waiting for the timeout period, then it means that the containers are not shutting down on receiving SIGTERM signals / messages.
+
+		In an attempt to solve this issue, the following is what you can do:
+
+		• You can ensure that you are using the JSON form of the CMD and also the ENTRYPOINT in your dockerfile.
+		• Use [“program”, “argument1”, “argument2”] instead of sending it as a plain string as like this – “program argument1 argument2”.
+		• Using the string form, makes Docker run the process using bash that can’t handle signals properly. Compose always uses the JSON form.
+		• If it is possible then modify the application which you intend to run by adding an explicit signal handler for the SIGTERM signal
+		• Also set the stop_signal to a proper signal that the application can understand and also know how to handle it.
+  
+Q17. How many containers can run per host?
+	- Depending on the environment where Docker is going to host the containers, there can be as many containers as the environment supports. 
+	- The application size, available resources (like CPU, memory) will decide on the number of containers that can run on an environment. 
+	- Though containers create newer CPU on their own but they can definitely provide efficient ways of utilizing the resources. 
+	- The containers themselves are super lightweight and only last as long as the process they are running.
+
+Q18. Will cloud automation overtake containerization any sooner?
+	- Docker containers are gaining the popularity each passing day and definitely will be a quintessential part of any professional Continuous Integration / Continuous Development pipelines. 
+	  Having said that there is equal responsibility on all the key stakeholders at each Organization to take up the challenge of weighing the risks and gains on adopting technologies that are      		  budding up on a daily basis. In my humble opinion, Docker will be extremely effective in Organizations that appreciate the consequences of Containerization.
+
+Q19. Is there a way to identify the status of a Docker container?
+	- docker ps -a
+
+Q20. What are the differences between the ‘docker run’ and the ‘docker create’?
+	- docker run command create running container
+	- docker create command create stop container
+
+Q21. What are the various states that a Docker container can be in at any given point in time?
+
+	There are four states that a Docker container can be in, at any given point in time. Those states are as given as follows:
+
+	• Running
+	• Paused
+	• Restarting
+	• Exited
+
+Q22. Can you remove a paused container from Docker?
+
+	To answer this question blatantly, No, it is not possible to remove a container from Docker that is just paused. 
+	It is a must that a container should be in the stopped state, before it can be 	removed from the Docker container.
+
+Q23. Is there a possibility that a container can restart all by itself in Docker?
+
+	To answer this question blatantly, No, it is not possible. 
+	The default –restart flag is set to never restart on its own. 
+	If you want to tweak this, then you may give it a try.
+
+Q24. What is the preferred way of removing containers - ‘docker rm -f’ or ‘docker stop’ then followed by a ‘docker rm’?
+
+	The best and the preferred way of removing containers from Docker is to use the ‘docker stop’, 
+	as it will allow sending a SIG_HUP signal to its recipients giving them the time that is required to perform all the finalization and cleanup tasks. 
+	Once this activity is completed, we can then comfortably remove the container using the ‘docker rm’ command from Docker and thereby updating the docker registry as well.
+
+Q25. Difference between Docker Image and container?
+
+	Docker container is the runtime instance of docker image.
+	Docker Image doesn't have a state and its state never changes as it is just set of files whereas docker container has its execution state.
+
+
+Q26. How to set fixed ipaddress for container
+
+	- First you need to create you own docker network (mynet123)
+
+		$ docker network create --subnet=172.18.0.0/16 mynet123
+
+	- Than simply run the image (I'll take ubuntu as example)
+
+		$ docker run --name <container-name> --net mynet123 --ip 172.18.0.22 -it ubuntu /bin/bash
+
+	- Then check ip address
+	
+		# hostname -i
