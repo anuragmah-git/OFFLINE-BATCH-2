@@ -1,0 +1,78 @@
+# What is Docker compose
+
+	Docker compose
+	--------------
+		- tool for defining & running multi-container docker applications
+		- use yaml files to configure application services (docker-compose.yml)
+		- can start all services with a single command : docker compose up
+		- can stop all services with a single command : docker compose down
+		- can scale up selected services when required : --scale <service-name>=4
+
+# Installation Steps
+====================
+
+Step.1) Check it is already installed or not using below command.
+ 
+	- $ docker-compose -v
+
+Step.2) Three ways to install docker-compose
+  
+  	1.) https://github.com/docker/compose/rel...
+
+   	2.) Using PIP
+    		pip install -U docker-compose
+	
+	3.) sudo apt-get install docker-compose
+
+Step.2) Create docker compose file at any location on your system
+	
+	- $ touch docker-compose.yml
+
+Step.3) Write a databse services in the yml file,  see below ex.
+
+	- vim docker-compose.yml
+		
+		services:
+
+		  web:
+		    image: nginx
+
+		  database:
+		    image: redis
+
+Step.4) Check the validity of file by command
+	
+	- $ docker-compose config
+
+      => If you got Invalid Error then add version in the file, see below ex.
+
+		version: '2'
+
+		services:
+
+		  web:
+		    image: nginx
+
+		  database:
+		    image: redis
+ 
+
+Step.5) Run docker-compose.yml file by command
+   	
+	- $ docker-compose up -d
+
+
+Step.6) Bring down application by command
+   	
+	- $ docker-compose down
+
+
+# How to scale services using docker-compose
+
+	—scale
+		$ docker-compose up -d --scale database=4
+
+	(Note- --scale:- It is command for scaling
+	       =4 :- It creates 4 database containers for one application using one server.)
+
+

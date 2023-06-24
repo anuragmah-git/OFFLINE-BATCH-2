@@ -1,0 +1,87 @@
+Docker Network
+======================
+ 
+ - In Docker, a network is a virtual network infrastructure that allows containers to communicate with each other and with the host machine. Docker networks provide isolation and segmentation, enabling containers to communicate securely and efficiently.
+
+- When you run containers, they are attached to one or more networks, which allows them to establish network connections and exchange data. Docker provides various network drivers that determine how containers communicate and interact with each other.
+
+
+
+Network Types: 
+=====================
+
+Docker supports different types of networks
+
+1. Bridge Networks
+
+2. Overlay Networks
+
+3. Host Networks
+
+4. Macvlan Networks
+
+
+Docker network commands:
+============================
+
+Docker provides several commands to manage networks. Here are some commonly used Docker network commands:
+
+1.docker network create:
+-------------------------
+This command is used to create a new network. You can specify the network driver, subnet, gateway, and other options as needed. 
+
+$ docker network create --driver bridge mynetwork
+
+2.docker network ls: 
+-----------------------
+This command lists all the networks created on the Docker host:
+
+$ docker network ls
+
+3.docker network inspect:
+---------------------------
+This command to get detailed information about a specific network. You can provide either the network name or the network ID:
+
+$ docker network inspect mynetwork
+
+4.docker network connect: 
+--------------------------
+This command connects a container to a network. You need to specify the container name or ID and the network name:
+
+$ docker network connect mynetwork mycontainer
+
+5.docker network disconnect: 
+-----------------------------
+This command to disconnect a container from a network:
+
+$ docker network disconnect mynetwork mycontainer
+
+6.docker network rm: 
+----------------------
+This command removes one or more networks. You can provide either the network name or the network ID:
+
+$ docker network rm mynetwork 
+
+=================================================================
+# How to set fixed ipaddress for container
+
+	- First we need to create our own docker network (mynet123)
+
+		$ docker network create --subnet=172.18.0.0/16 mynet121
+
+	- Than simply run the image (I'll take ubuntu as example)
+
+		$ docker run --name mycontainer --net mynetwork --ip 172.19.0.22 -it ubuntu /bin/bash
+
+	- Then check network list 
+	
+		$ docker network ls
+
+	- If we want to delete ur created network 
+
+		$ docker network rm <network-name>
+
+	- If you want check more command use --help
+
+		$ docker network --help
+
