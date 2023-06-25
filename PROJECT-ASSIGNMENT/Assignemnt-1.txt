@@ -1,0 +1,7 @@
+1. Simple website using s3
+
+Create a website using s3 and the sample index.html from https://gist.github.com/chrisvfritz/bc010e6ed25b802da7eb Need a new repo in GitHub which will have the pipeline(GitHub actions) to deploy this index.html file from that repo to a s3 bucket.
+Need to create a branch from the main branch, commit and push some change to this index.html and raise a PR.
+On merging the PR, the changed index.html file should be copied to the s3 bucket and when we access the s3 website Url(s3 direct url) then this index.html should show the changed content in the browser.
+
+This is to test your knowledge and usage of GitHub, GitHub actions, PR, branching in GitHub, s3, website, GitHub secrets (for AWS credentials), AWS cli to copy the file to s3 from the GitHub actions.
