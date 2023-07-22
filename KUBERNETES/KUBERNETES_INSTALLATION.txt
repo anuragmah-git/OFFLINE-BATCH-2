@@ -1,0 +1,184 @@
+======== Kubernetes installation steps ================
+
+Step.1 
+
+# vi /etc/hosts --- open this file and add all master and both worker node ips and names for creating communication.
+				--- Add Master,Node1,Node2 entry in this file 
+
+=========================================================
+
+Srep.2 
+
+Go to docs.docker.com and install Docker 
+
+# Update apt-get cache
+	$ apt-get update
+	
+# Install docker dependencies
+	$ apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+	
+# Add GPG key to apt repository
+	$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	
+# Setup Stable repository:
+	$ add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+	
+# Update apt package index:
+	$ apt-get update
+	
+# Install Latest version of Docker
+	$  apt-get install docker-ce
+	
+#
+Installation Check
+sudo docker --version
+
+===========================================================================
+
+Step.3
+
+Go to /etc/docker directory and check daemon.json file is present or not if not then create manually and add below entry
+
+# vim daemon.json
+
+{
+  "exec-opts": ["native.cgroupdriver=systemd"]
+}
+
+# systemctl restart docker
+# systemctl enable docker
+# docker info (now its systemd)
+
+===========================================
+
+Step.4. 
+
+Now Installing kubeadm, kubelet and kubectl go to below link
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
+==> Update the apt package index and install packages needed to use the Kubernetes apt repository:
+
+# apt-get update
+# apt-get install -y apt-transport-https ca-certificates curl
+
+==> Download the Google Cloud public signing key:
+
+# curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+# curl -L https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add
+# touch /etc/apt/sources.list.d/kubernetes.list
+# chmod 666 /etc/apt/sources.list.d/kubernetes.list
+
+Note - This link is useful for above commands
+(https://github.com/cubensquare/K8S-v1.26-installation-containerd/blob/main/INSTALLATION%20STEPS.md)
+
+==> Add the Kubernetes apt repository:
+
+# echo deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://apt.kubernetes.io/ kubernetes-xenial main | tee /etc/apt/sources.list.d/kubernetes.list
+
+==> Update apt package index, install kubelet, kubeadm and kubectl, and pin their version:
+
+# apt-get update
+# apt-get install -y kubelet kubeadm kubectl
+# apt-mark hold kubelet kubeadm kubectl
+
+=======================================================
+
+Step.5 
+
+Now we need to install cri-dockerd go to below link 
+
+https://github.com/Mirantis/cri-dockerd
+
+# git clone https://github.com/Mirantis/cri-dockerd.git 
+ 
+-- Clone the above repository
+
+# # Run these commands as root
+
+cd cri-dockerd
+mkdir -p /usr/local/bin
+install -o root -g root -m 0755 cri-dockerd /usr/local/bin/cri-dockerd
+install packaging/systemd/* /etc/systemd/system
+sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service
+systemctl daemon-reload
+systemctl enable cri-docker.service
+systemctl enable --now cri-docker.socket
+
+			============= or ===========
+==> Install cri-dockerd from kubernetes.io website and use below commands 
+
+#systemctl restart docker  
+#systemctl restart cri-docker
+#systemctl enable cri-docker
+
+			=============== or ===============
+
+==> go to cd /etc/containerd/ directory and enabled the plugin instead of disabled (ex. enabled_plugins = ["cri"]). and add below code in /etc/containerd/config.toml
+
+[plugins."io.containerd.grpc.v1.cri".containerd]
+endpoint = "unix:///var/run/containerd/containerd.sock"
+
+# systemctl restart containerd
+# systemctl enable containerd
+
+==================================
+Perform Below steps on MASTER only 
+==================================
+Step.6
+
+# kubeadm init 
+
+      or 
+	  
+# kubeadm init --cri-socket unix:///var/run/cri-dockerd.sock
+
+-- verify kubeadm installation with all components
+
+====================================
+
+Step.7 
+
+Note - after installing kubeadm init, if you try to execute (# kubectl get node) command we will get error, For starting our kubernetes cluster from any user like
+		root or created user on master. we need .kube folder in home directory and inside this we need config file and in this file we need admin.conf content in this .kube/config file. admin.conf file is available in /etc/kubernetes/admin.conf.
+	 - kubectl command first connect with this .kube/config file and api-server will authenticate this and provide result.
+
+# cd .kube
+                              
+# cp /etc/kubernetes/admin.conf .kube/config
+
+# kubectl get nodes
+
+===> for conneting node with master, we need to use below command on each master  
+
+# kubeadm join 101.53.148.90:6443 --token b8zn4l.9tsd22a3eh6t8xjk \
+        --discovery-token-ca-cert-hash sha256:2c70348c7517f5e403c5dfbc021a3118ecf828bff8aab4d59989743672639889
+		
+											or 
+											
+# kubeadm join 101.53.148.90:6443 --token b8zn4l.9tsd22a3eh6t8xjk \
+        --discovery-token-ca-cert-hash sha256:2c70348c7517f5e403c5dfbc021a3118ecf828bff8aab4d59989743672639889 --cri-socket unix:///var/run/cri-dockerd.sock
+
+===> for IP allocation to cluster we need to install external CNI (container network interface) plugin
+===> this CNI will assign ip to all pod and container
+https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+===> go to kubernetes.io website and search cni addons, then will get list of cni and will choose (Calico)
+https://docs.tigera.io/calico/latest/about
+
+==> go to above calico website and click on get started --> Install calico --> self-managed on-premises --> Install calico n/w and n/w policy .... --> manifest --> 
+select 50 nodes or less and copy below cmd and run on Master 
+
+(Install Calico with Kubernetes API datastore, 50 nodes or less, Download the Calico networking manifest for the Kubernetes API datastore)
+
+# curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml -O
+
+==> Apply the manifest using the following command. 
+
+# kubectl apply -f calico.yaml
+
+==> now check all nodes is in ready state or not on master
+
+# kubectl get nodes or -w 
+
+=======================================================

@@ -1,0 +1,206 @@
+===> In kubernetes we work on api-resources(objects). like same in cloud services 
+
+===> To list all api-resources 
+# kubectl api-resources
+
+1. pod --> smallest and last object which kubernetes create kubectl get pods -o wide 
+   kubectl run web1 --image nginx 
+   kubectl get pods
+
+2. Namespace --> project level isolation
+  
+===> For listing nodes 
+# kubectl get nodes
+
+===> For listing nodes with complete information 
+# kubectl get nodes -o wide 
+
+===> If I want to fetch more details on any api-resources (ex. node,pod,namespaces.....etc) use below command
+# kubectl describe <api-resources-name> (ex.node) <node-name>
+
+( Note- If we want to set auto-complemetion command like we need to complete command using tab button then need to follow below steps)
+
+1. Search on google - (kubectl completion bash) and open spacelift.io website 
+2. # apt-get install bash-completion
+3. # kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
+4. # exit (reload or restart terminal)
+---------------------
+
+1. ===> POD creation on master use below command <====
+----------------------------------------------------------
+
+===> For POD creation
+# kubectl run <pod-name> --image <image-name>
+(Note- give name to pod as per requirement for ex. kubectl run web1 --image nginx)
+
+===> For listing pod 
+# kubectl get pod 
+
+===> If we need more info about pod 
+# kubectl get pod -o wide
+
+===> If we want to describe pod 
+# kubectl describe pod <pod-name>
+
+(Note- kubelet is useful to pull image, create pod create and start container ) 
+
+===> If we want to check log of pods
+# kubectl logs <pod-name>
+
+===> logged in to pod
+# kubectl exec -it <pod-name> -- bash
+
+===> If we want to get inside pod details on master then use below cmd
+# kubectl exec <pod-name> -- <command-name> or directory (-- this hypen hypen is compulsary)(ls /)
+
+===> Logged in to container and create one file inside pod and exit it from pod and take pod ip and curl it from master https://<pod-ip>
+# kubectl run <pod-name> --image <image-name> (ex. nginx) 
+# kubectl get pods
+# kubectl exec -it <pod-name> -- bash 
+# echo "test" > /usr/share/nginx/html/index.html
+# exit (from pod)
+# kubectl get pods -o wide (take the pod ip)
+# curl http://<pod-ip>
+
+===> For single POD deletion
+# kubectl delete pod <pod-name>
+
+===> For multiple POD deletion
+# kubectl delete pod --all
+
+
+2. ===> Namespace creation with etc. <====
+--------------------------------------------
+
+==> What is Namespace (ns)?
+
+It is project level isolation ex. If we have different team like Developemnt,testing,production,DevOps team. I want to create one seprate area for each team they can work independently w/o any conflicts with other team, but work can be visible to each team. so I will create one cluster and inside will create seprate namespaces means seprate pod in each node for all team.
+
+ cluster ------> Node-1 ----> Two Pods 
+				 Node-2 ----> Two Pods
+				 
+===> namespace creation (we can create multiple namespace if we need)
+# kubectl create ns <namespace-name> (ex. test) (create two theree namespaces like DEV TEST PROD) 
+
+===> List Namespaces
+# kubectl get ns
+
+(Note - when we create kubernetes cluster, so by default there is some namespaces like default,kube-public,kube-system,kube-node-lease)
+
+===> Suppose we are creating below or any new pod w/o mentioning namespace, so it will create in default namespace
+# kubectl run <pod-name> --image <image-name> 
+
+===> If we want to check where namespace define then go to this file {cat .kube/config} we will not see any namespace, so it means its default,
+Suppose we are working regularly on any namespace, then we need to define namespace, in this file like this (namespace : <namespace-name>), so all pod will create in define namespace.
+
+===> if we need to list any other namespace pods use below cmd
+# kubectl get pods -n <namespace-name>
+
+===> If we can see different namespace pod, then we can create pod in different namespace also.
+# kubectl run <pod-name> --image <image-name> -n <namespace-name>
+# kubectl get pods -n <namespace-name>
+
+===> we can create same pod in different namespace as well just change namespace in below command
+# kubectl run <pod-name> --image <image-name> -n <namespace-name>
+# kubectl get pods -n <namespace-name>
+
+===> If we want to describe any pod from specific namespace then use below command
+# kubectl describe pod <pod-name> -n <namespace-name>
+
+(If we want to change any namespace go to .kube/config)
+
+===> delete namespace
+# kubectl delete -n <namespace>
+
+
+3. ===> Label creation on any api-resources (ex. pod, namespace or any....). <====
+-----------------------------------------------------------------------------------
+
+===> label creation on POD
+# kubectl label pod <pod-name> <label-name> (ex. env=prod)
+
+===> if you want to show label on resources
+# kubectl get pods --show-labels
+
+===> label creation on namespace
+# kubectl label ns <namespace-name> <label-name>
+# kubectl get ns --show-labels
+
+===> label creation on node
+# kubectl label nodes <complete node-name> <label-name>
+# kubectl get nodes --show-labels
+
+===================================== We can work in kubernetes in different ways ============================
+1. Command Method (Create,edit,delete)
+
+==> delete pod from particular namespace
+# kubectl delete pod <pod-name> -n <namespace-name>
+
+==> if you want to delete pod from current namespace then no need to use -n 
+# Kubectl delete pod <pod-name>
+
+==> If we want to edit any resources like pod or namespace or any other
+# Kubectl edit pod <pod-name> (if its in different namespace then use -n <namespace-name>) (for edit add location or any ex. location=jaipur )
+
+==> show edit particular
+# kubectl get pods --show-labels
+
+---------
+
+2. File Methods (create,edit,delete) ---> manifest (like playbook)
+
+--->In ansible we call to file as playbook, but in kubernetes we called as manifest, and this file is written in key:value pair.
+
+===> If we are taking about kubernetes, in k8s we are writing yaml file (means manifest) on the basis of 4 component 
+		1. apiversion:
+		2. kind:
+		3. metadata:
+		4. spec:
+		
+===> suppose if you dont know how to write or create yaml in k8s, so (--dry-run=client -o yaml) on any resources it will print yaml format copy and use it.	
+# kubectl create ns <namespace-name> --dry-run=client -o yaml 
+
+===> we know etcd also store data in key:value pair, but if we want to check how etcd store data then use blow cmd ((--dry-run=server -o yaml))
+# kubectl create ns <namespace-name> --dry-run=server -o yaml
+
+===> now we need to create namespace using yaml file
+# kubectl create ns <namespace-name> --dry-run=client -o yaml > ns.yaml
+
+===> go to ns.yaml file using vi and modify files
+# vi ns.yaml
+
+===> now if we need to konw how apiversion and kind will comme then check api-resources 
+# kubectl api-resources (here will see all apiversion , kind ....)
+
+-- metadata will give namespace or label or etc ....
+
+===> now yaml file creation namespace will not create automatically we need to use below command for creating resources
+# kubectl create -f ns.yaml
+
+===>  if we need to check any label
+# kubectl get ns  <namespace-name> --show-labels
+
+===> if we edit yaml file again then changes will not reflect automatically we need to use below cmd
+# kubectl apply -f ns.yaml
+
+(apply command will work on both side creation and reflect changes)
+
+===> verify changes 
+# kubectl get ns  <namespace-name> --show-labels
+
+==> delete namespace
+# kubectl delete ns <namespace-name>
+
+===> if we want to create yaml file for POD in specific namespace
+# kubectl run <pod-name> --image <image-name> -n <namespace-name> --dry-run=client -o yaml > pod.yaml
+# vi pod.yaml
+
+(we vcan change container name also means pod and container name will be different)
+
+
+
+
+ 
+
+
+ 

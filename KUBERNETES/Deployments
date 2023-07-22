@@ -1,0 +1,94 @@
+======= Deployments has two main feature HA and Scaling =========
+
+1. HA
+------
+
+Till now we see PODs, Namespace, Labels and basics yaml concepts
+
+===> We created pods and if we deleted pods then we can not bring the pod again automatically, we need to create new one, but manually we need to create. so this is called as NO HA. We need some HA mecahnisum so if the pod is deleted it can be created automatically.
+
+===> Now we some HA functionality in the form of Deployments, we have 6 types of Deployments strategy:
+1. Pod: (No HA, No Scaling)
+2. Replication Controller (RC): (HA Scaling)
+3. Replication Set (RS): (HA Scaling)
+4. Deployment (RC, RS, ROLLOUT, ROLLBACK)
+5. Daemon Sets 
+6. Static Pods
+
+--> We see pods creation but, we can not get any HA to control, If we deployed one application and suddenly load has been increased so we can not control like create some more replicas for pods or any HA feature.
+
+--> Now we have one feature i.e Replication feature, at the end this is also creating pods but now these feature will manage pods, in market 1st came RC and then RS both providing same feature but now we have one feature i.e. Deployment this feature have both functionality with others functionality also now in market this Deployment feature used only for pod or namespace or etc., will see this now.
+
+--> Now we have one pod deployment scenario (go to diagram), this will manage pods. go to kubernets.io site and search deployment and copy below deployment code for pods and go to master terminal and create one deployment.yaml file and paste copied code into this file.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+  (we can define here namespace also namespace: <name> )
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
+--> Now pod creation will manage by above deployment code
+
+--> (metadata)-- provides name to this deployment and labels
+--> (spec)-- provides replicas, selector, template 
+		--> {replicas}- here we can define how many pods we need to create 3 or any number, 
+						this replicas came from replication control.
+		--> {selector}- 
+		--> {template}- this template is pods template, all data is template data, 
+						when the pod will create by deployment, its uses this template data 
+
+(Note - template label and selector label must be same)
+
+--> Create deployment file   						
+# Kubectl create -f deployment.yaml 
+		or 
+# kubectl create -f deployment.yaml -n <namespace-name>
+
+--> now will check most imp feature is HA
+
+- delete any pod and it will create automatically
+# kubectl delete pod <name>
+
+(Note - now kube controller will take this responsibility to maintain 5 pods for this deployment, if any pod deleted then it will create new pod immediatly by kub controller)
+
+--> describe pod and check owner reference
+# kubectl describe pod <pod-name>
+
+--> list deployment
+# kubectl get deployment
+
+===============================
+
+2. Scaling
+----------
+
+--> Scaling has two types horizantal and vertical scaling, but k8s works on horizantal scaling only.
+now we will see manual horizantal scaling. for auto horizantal scaling we need matrix server.
+ex. If application load has been increased suddenly and we need more pods immediatly so we can create new pods immediatly using below cmd
+
+# kubectl scale deployment <deployment-name> --replicas <number>
+					or
+					
+# kubectl edit deployment.apps <deployment-name> (using this cmd we are entered into the etcd data directly and will change replicas number and save it, pods will be created)
+					or (we can go to deployment.yaml file and make changes to replicas and run the file)
+# kubectl create -f deployment.yaml 
+
+---> list all 
+# kubectl get all

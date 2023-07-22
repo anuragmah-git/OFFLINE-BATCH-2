@@ -1,0 +1,54 @@
+# What is Kubernetes?
+
+--> Its an container orchestration tool
+
+# Why we need Kubernetes?
+
+- website become popular
+- traffic increases 1000/Day
+- multiple container 
+- again traffic increase 5000/min
+
+- limit of hardware, now if we need to create multiple machine?
+- but how connectivity works?
+
+- 2nd scenario, now traffic increase you need to increase container, suppose need 100 container
+  containers--->no auto scaling--->manual time taking  
+  
+- 3rd scenario fail of container ---> manage manual difficult
+
+---- for above problems we need this container orchestration tool.-------
+
+# What is cluster
+
+---> Collection of machines/server.
+
+# What is Worker Node 
+
+---> Machine on which we run the workerloads
+
+# Master Node 
+
+---> To Manage the worker node
+
+#Components of Cluster/Worker node
+
+1. Container run time --> Container Software --> At the end, application will run in container with the help of this.
+2. Kubelet --> The kubelet is the primary "node agent" that runs on each node --> it manages the whole machine.
+3. Kube-Proxy --> kube-proxy is a n/w proxy that runs on each node in your cluster, implementating the part of kubernetes service concepts.Kube-Proxy maintains n/w
+				  rules on nodes --> ip tables rules.
+				  
+#Master Node Components
+
+1. KUBE-API-SERVER --> Communication channel for whole cluster -- all components communicate through api server --> kubelet connect with kube-api-server.
+
+2. ETCD --> Key value data store --> cluster data base --> whole information from 0 to end of cluster is save in etcd 
+
+3. KUBE-SCHEDULAR --> find best fit node for pods
+
+4. KUBE-CONTROLLER-MANAGER --> monitoring --> maintain desired state of cluster --> include pods and node 
+
+5. Kubectl --> its kubernetes command for managing all things.
+
+
+================
