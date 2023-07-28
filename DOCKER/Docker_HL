@@ -3,18 +3,17 @@
 
 Que1). Diff bet'n Physical server, Virtual server and Docker container?
 =>Physical Server :- We are creating one physical server machine with 1TB HDD, CPU and RAM, if we required another multiple server that time we need same configuration machine, 
-  		     that means we will do seprate OS, HDD, RAM, in all machine so the time and cost will be increasing and testing and deployment process will be slow.
+that means we will do seprate OS, HDD, RAM, in all machine so the time and cost will be increasing and testing and deployment process will be slow.
 
 =>Virtual Machine :- If we are using virtual machine in one Computer, we are installing multiple virtual machine in computer and after install seprate OS and allocating some Storage and Ram.
-                    means we are virtualize the hardware, means we can supply the same hardware to this computer. again the all process will be going on one machine but its taking more time, means process will be slow.
+ means we are virtualize the hardware, means we can supply the same hardware to this computer. again the all process will be going on one machine but its taking more time, means process will be slow.
 
 =>Docker Container :- If we are using DOCKER, docker also provide virtualization, means install docker in one computer there is no need to install seprate OS,HDD and RAM.
 
 ==================================================================
 
 Que2). what is docker?
-=> Docker is containerization tool, Docker is an extension of Linux Containers (LXC): a unique kind of lightweight, 
-   application-centric virtualization that drastically reduces overhead and makes it easier to deploy software on servers. 
+=> Docker is containerization tool, Docker is an extension of Linux Containers (LXC): a unique kind of lightweight,application-centric virtualization that drastically reduces overhead and makes it easier to deploy software on servers. 
 
 ==================================================================
 
@@ -200,7 +199,7 @@ Shotdown a container
 
 # How to create multiple container in one command (creating container in background mode)
         $ docker run -it -d --name <container-name> ubuntu /bin/bash
-        	-d is daemon mode, means container run in background mode, without -d you will get new terminal and with -d container create in background mode
+        	-d is daemon mode, means container run in background mode, without -d you will get new terminal and with -d container create in background mode.
 
 Note:- sequence doesnt matter after run -d before -it or --name but after --name container name is compulsory 
 
@@ -259,7 +258,7 @@ Note: Two containers can't have the same name.
 	ssh username@172.17.0.2
 
 - Create an user and set up password
-$ useradd -m -d /home/username -s /bin/bash username
+$ useradd -m -d /home/grras -s /bin/bash grras
 $ passwd username
 
 - Install ssh server

@@ -237,14 +237,14 @@ $ cd sourceCode/
 
 # 
 After Create Maven web application project in our created directory usign below command.
-$ mvn archetype:generate -DgroupId=com.flipkart -DartifactId=flipkart -Dversion=1.0-SNAPSHOT -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp
+$ mvn archetype:generate -DgroupId=com.Netflix -DartifactId=Netflix -Dversion=1.0-SNAPSHOT -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp
       
 	=> archetype:generate - this is generating maven project.
         => DgroupId - this is package name. 
 	=> DartifactId - this is project name. 
 	=> Dversion - this is version. 
 	=> DinteractiveMode - keep always interactivemode is on false.
- (Note :- Here project name is flipkart)
+ (Note :- Here project name is Netflix)
 
 #
 After go to the project directory
@@ -255,7 +255,7 @@ After entering project directory Build the application using below Maven command
 $ mvn install
 
 #
-After mvn install target folder is creating in project folder in this folder Check final artifact i.e flipkart.war file in target directory 
+After mvn install target folder is creating in project folder in this folder Check final artifact i.e Netflix.war file in target directory 
  (For ex. (pom.xml  src  target) like this)
 $ ls target 
 
@@ -266,7 +266,7 @@ Then Prepare tomcat for deployments / installation
 - Make sure JAVA_HOME and M2_HOME environment variable is set in .bashrc file.
 
 #
-Then copy flipkart.war file from target folder to tomcat webapps folder means, (Deploy flipkart.war into tomcat).
+Then copy flipkart.war file from target folder to tomcat webapps folder means, (Deploy Netflix.war into tomcat).
 $ cp flipkart.war $TOMCAT_HOME/webapps
 
 #
@@ -275,9 +275,12 @@ $ $TOMCAT_HOME/bin/./startup.sh
 
 #
 Launch application with below URL.
-http://localhost or system IP:8080/flipkart
+http://localhost or system IP:8080/Netflix
 [http://tomcat_server_name:8080/warfilename]
 
+#
+find IP using below command
+$ hostname -i
 
 #26
 - Building the War.

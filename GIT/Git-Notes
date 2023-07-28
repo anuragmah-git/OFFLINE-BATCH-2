@@ -41,10 +41,10 @@ Creating remote repository in github
      	click on "new repository" --> "create reopository" 
 
 3. copy the repo URL from Github:
-	https://github.com/swapnilmahajan-git/REPO-NAME.git
+	https://github.com/anuragmah-git/REPO-NAME.git
 
 4. Clone the source code from remote repository using 'git clone' command
-	$ git clone https://github.com/anuragmah-git/REPONAME.git
+	$ git clone https://github.com/anuragmah-git/REPO-NAME.git
 
 5. 	$ cd REPONAME
 
@@ -54,15 +54,16 @@ Creating remote repository in github
 
 	    $ git status
 
-	    $ git add Login.java / git add .
+	    $ git add Login.java or git add .
 
-	    $ git config --global user.name "swapnil"
+	    $ git config --global user.name "swapnil" 
 
 	    $ git config --global user.email "abc@gmail.com"
 
 	    $ git commit Login.java -m "login module code"
 		
 	    $ git push
+	     UN and PWD
 
 #
 Git Commit structure

@@ -35,12 +35,11 @@
 										OR
 						======================================================================
 
- 			SVN (C.V.C.S.)														GIT (D.V.C.S.)
+ 			SVN (C.V.C.S.)																		 GIT (D.V.C.S.)
 		-------------------------												     -------------------
-	1.) No local repository.													1.) It has local repository.	
+	1.) No local repository.													 	1.) It has local repository.	
 	2.) There is no staging area.													2.) There is staging area.
-	3.) There is branching concept resides in server side . 								      	3.) here users can create 
-															any no of branches in locally and remote.
+	3.) There is branching concept resides in server side . 							3.) here users can create any no of branches in locally and remote.
 	4.) Internet is required.													4.) Internet is not required.
 	5.) Numbers as versions.													5.) SHA Value as versions.
 	6.)Subversion uses svn import command to create initial repository.								6.) git init
