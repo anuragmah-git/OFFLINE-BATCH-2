@@ -92,3 +92,329 @@ ex. If application load has been increased suddenly and we need more pods immedi
 
 ---> list all 
 # kubectl get all
+
+===============
+DaemonSets
+==============
+
+# vi deployment.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+  (we can define here namespace also namespace: <name> )
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+		
+# kubectl create -f deployment.yaml
+
+# kubectl get nodes 
+
+# kubectl describe node master 
+
+Note - replica will not create on master due to some taints has been define
+
+# kubectl create deployment test --image nginx --replicas=3
+
+-- above cmd will create replicas on any node, but if we want to create only replicas on specified node then Daemon sets is best option
+
+# kubectl get ds -A
+
+-- no of nodes = no of replicas
+
+# kubectl get pods -o wide -n <ds-name>
+
+--- whenever we add any new node then daemon set automatically create replicas(pod) on new node (pod creation manage by kubelet)
+
+===============
+Static Pod
+===============
+
+pod which is not manage by kubernetes, So I need create pod on node directly 
+
+# kubectl get node
+
+-- go to any node
+
+# ssh node1.cka.com -p 2289
+
+-- create one yaml file 
+
+# cd /etc/kubernetes/manifests/static-web.yaml (this file maintain by kubelet)
+
+kubectl run test --image nginx --dry-run=client -o yaml >  /etc/kubernetes/manifests/static-web.yaml 
+
+or 
+
+add below code into yaml file
+
+mkdir -p /etc/kubernetes/manifests/
+cat <<EOF >/etc/kubernetes/manifests/static-web.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-web
+  labels:
+    role: myrole
+spec:
+  containers:
+    - name: web
+      image: nginx
+      ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+EOF
+
+-- we just need to create yaml file for pod creation and pod will be created automatically 
+-- also we are trying for delete then pod will not deleted 
+-- if we want to delete then delete yaml file from manifest 
+
+=====================
+Scheduling
+===============
+-- for scheduling kube scheduler is responsible 
+ 
+1. cordon and uncordon
+-------------------
+
+-- If we want to disable pod creation on any node for some time or day.
+# kubectl cordon node1.cka.com (using this cmd scheduling is disabled)
+
+-- try to create pod, so pod will not generate
+# Kubectl create deployment test2 --image nginx --replicas 5 
+
+-- enable scheduling
+# kubectl uncordon node1.cka.com
+
+2. drain
+-----
+
+drain is like cordon + delete all the resources
+# kubectl drain node1.cka.com
+
+-- drain delete only those pods that is manage by cluster, drain will not delete pod i.e manage by daemon sets
+
+use --force and --ignore-daemonsets
+
+# kubectl get nodes
+
+-- now apply uncordon
+# kubectl uncordon node1.cka.com
+
+=======
+3. NodeName
+======= 
+-- Its hard scheduling, it will bypass kube-scheduler, means if we disable schedulig on any node,
+ then we can not create any resources, but using NOdeName we can create, thats why its called as hard scheduling
+ 
+ # kubectl get all 
+ 
+ # kubectl delete pod,ns and deployment
+ 
+ # kubectl get nodes
+ 
+ # vi deployment.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+	  nodeName: node1.cka.com
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        
+# kubectl create -f deployment.yaml
+
+# kubectl get pods
+ or 
+ -o wide 
+ 
+we need to see hard schedulig, so cordon any node
+
+# kubectl cordon node-name
+
+# kubectl create -f deployment.yaml (again)
+
+# kubectl get pods -o wide
+
+try to create pod on run command
+
+# kubectl run web3 --image nginx
+
+# kubectl get pods -o wide
+
+=============
+NodeSelector
+=============
+
+# kubectl uncordon node1 and node2
+
+# apply label on both node
+
+# vi deployment.yaml
+apiVersion: apps/v1
+kind: deployment 
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+	  nodeSelector:
+		app: <label-name>
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+
+# kubectl create -f deployment.yaml 
+
+# kubectl get pods -o wide 
+
+(nodename will use only single node, for all node we will use nodeselector )
+
+if we apply cordon, we did not crate pods using nodeSelector
+
+-- try cordon and create pod creation
+
+=========
+Taints & toleration
+=========
+
+tains is depend on theree things key,value,
+effect-  Noschedule-- means will not apply schedlue 
+prefernoschedule - schedlue is not fixed ()
+noexecute-- means no pod available
+
+# kubectl describe node master (here default noschedule)
+
+create taints
+# kubectl taint node node1.cka.com corona=virus:Noschedule (Noschedule will not delete exist pods and will create new pods also)
+
+# kubectl describe node node1 (tains has been applied here )
+
+# kubectl get pods -o wide 
+
+# vi deployment.yaml
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: taint
+  labels:
+    app: nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+	  nodeSelector: node1
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+
+# create -f 
+
+# get pods -o 
+
+# vi deployment.yaml
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: taint
+  labels:
+    app: nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+	  nodeSelector: 
+	  app: test 
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+		
+# check label on nodes is there any exist or not 
+
+# create -f 
+
+# get pods 
+
+if now we need to apply toleration
+
+# vi deployment.yaml
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: taint
+  labels:
+    app: nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+	  toleration:
+	   key: corona
+	   value: "virus"
+	   effect: "Noschedule"
+	  nodeSelector: 
+	  app: test 
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+		
+# kubectl apply -f deployment.yaml
+
+# get pods
+
+

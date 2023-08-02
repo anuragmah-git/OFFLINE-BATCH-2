@@ -438,7 +438,7 @@ Problem:- Creating docker image using "docker commit" command
 	
 	- create a docker image from the container OR convert docker container as 	
 	  docker image
-		$ docker commit <container-name> "swapnilhub/nginx-image"
+		$ docker commit <container-name> "<docker-hub-username>/nginx-image"
 	
 	- check if image has been created
 	  $ docker images
